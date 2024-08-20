@@ -20,6 +20,7 @@ public class Estoque {
 
     private String caminho_estoque = "data/estoque.txt";
     BufferedWriter writer;
+    BufferedReader reader;
 
     public Estoque(){
         try {
@@ -36,7 +37,7 @@ public class Estoque {
     public void listarItens(){
 
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(caminho_estoque));
+            reader = new BufferedReader(new FileReader(caminho_estoque));
 
             reader.close();
         } catch (Exception e) {
@@ -85,7 +86,30 @@ public class Estoque {
 
     }
     private Boolean buscarItem(Produto produto){
-        return true;
+        
+        try {
+            reader = new BufferedReader(new FileReader(caminho_estoque));
+
+            String linha;
+            
+            while ((linha = reader.readLine()) != null) {
+                String[] info = linha.strip().split(",");
+                String nome = info[0];
+                String categoria = info[1];
+                float preco = Float.parseFloat(info[2]) ;
+                
+
+                Produto produto2 = new Produto(nome, categoria, preco);
+
+                if(produto.equals(produto2)){
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error: Erro ao escrever no arquivo "+ e.getMessage());
+        }
+
+        return false;
     }
 
 
