@@ -27,7 +27,7 @@ public class Estoque {
             File fileIndex = new File(caminho_estoque);
             if (!fileIndex.exists()) { // Verificar se o arquivo existe e, se não existir, criá-lo
                 fileIndex.createNewFile();
-            } 
+            }
 
         } catch (IOException e) {
             System.out.println("Error: Falha ao criar arquivo " + e.getMessage());
@@ -39,11 +39,25 @@ public class Estoque {
         try {
             reader = new BufferedReader(new FileReader(caminho_estoque));
 
-            reader.close();
-        } catch (Exception e) {
+            String linha;
+            
+            while ((linha = reader.readLine()) != null) {
+                String info = linha.strip();
+                System.out.println(info);
 
+                /*String nome = info[0];
+                String categoria = info[1];
+                float preco = Float.parseFloat(info[2]) ;
+                int quantidade = Integer.parseInt(info[3]);*/
+
+            }
+        } catch (IOException e) {
+            System.out.println("Error: Erro ao ler no arquivo " + e.getMessage());
         }
+
+        
     }
+    
 
     public void adicionarProduto(Produto produto){
         Boolean verificaSeExiste = buscarItem(produto);
@@ -85,8 +99,9 @@ public class Estoque {
     public void editarItem(Produto produto){
 
     }
+
     private Boolean buscarItem(Produto produto){
-        
+
         try {
             reader = new BufferedReader(new FileReader(caminho_estoque));
 
@@ -112,5 +127,5 @@ public class Estoque {
         return false;
     }
 
-
 }
+
