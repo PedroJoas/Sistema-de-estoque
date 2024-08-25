@@ -1,0 +1,10 @@
+Arroz,Alimentos,15.90,10
+Feijão,Alimentos,8.50,5
+Sabonete,Higiene,2.30,20
+Shampoo,Higiene,12.00,15
+Pasta de dente,Higiene,5.50,25
+Café,Bebidas,18.00,12
+Suco de Laranja,Bebidas,6.80,30
+Chocolate,Doces,3.75,40
+Biscoito,Doces,4.20,50
+Detergente,Limpeza,3.60,18

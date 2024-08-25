@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import classes.Produto;
 
@@ -18,9 +20,9 @@ public class Estoque {
      * Buscar item
      */
 
-    private String caminho_estoque = "data/estoque.txt";
-    BufferedWriter writer;
-    BufferedReader reader;
+    private String caminho_estoque = "../data/estoque.txt";
+    private BufferedWriter writer;
+    private BufferedReader reader;
 
     public Estoque(){
         try {
@@ -58,11 +60,11 @@ public class Estoque {
         
     }
     
-
     public void adicionarProduto(Produto produto){
-        Boolean verificaSeExiste = buscarItem(produto);
+        int pos_produto = buscarItem(produto);
 
-        if(!verificaSeExiste){
+        if(pos_produto == -1){
+
             String nome = produto.getNome();
             String categoria = produto.getCategoria();
             float preco = produto.getPreco();
@@ -90,42 +92,50 @@ public class Estoque {
 
     }
     private void aumentarQuantidade(Produto produto){
+        int verifica = buscarItem(produto);
 
+        
     }
     public void removerItem(Produto produto){
-        Boolean verifica = buscarItem(produto);
+        int verifica = buscarItem(produto);
     }
     
     public void editarItem(Produto produto){
 
     }
 
-    private Boolean buscarItem(Produto produto){
+    private int buscarItem(Produto produto){
+
+        List<String> linhas = new ArrayList<>();
+        BufferedReader reader;
 
         try {
-            reader = new BufferedReader(new FileReader(caminho_estoque));
+                reader = new BufferedReader(new FileReader("src/main/java/a.txt"));
 
-            String linha;
-            
-            while ((linha = reader.readLine()) != null) {
-                String[] info = linha.strip().split(",");
-                String nome = info[0];
-                String categoria = info[1];
-                float preco = Float.parseFloat(info[2]) ;
-                
-
-                Produto produto2 = new Produto(nome, categoria, preco);
-
-                if(produto.equals(produto2)){
-                    return true;
+                String linha;
+    
+                while ((linha = reader.readLine()) != null) {
+                    linhas.add(linha);
                 }
+            } catch (IOException e) {
+                System.out.println("Error: Erro ao escrever no arquivo "+ e.getMessage());
             }
-        } catch (IOException e) {
-            System.out.println("Error: Erro ao escrever no arquivo "+ e.getMessage());
-        }
 
-        return false;
-    }
+            for(String l : linhas){
+            String[] info = l.strip().split(",");
+            String nome = info[0];
+            String categoria = info[1];
+            float preco = Float.parseFloat(info[2]);
+    
+            Produto produto1 = new Produto(nome, categoria, preco);
+
+            if(produto1.equals(produto)){
+                return linhas.indexOf(l);
+            }
+            
+            }
+            return -1;
+        }
 
 }
 
